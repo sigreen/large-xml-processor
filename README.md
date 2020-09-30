@@ -61,7 +61,7 @@ metadata:
 spec:
   version: 7.7.0
   deploymentPlan:
-    size: 2
+    size: 1
     image: registry.redhat.io/amq7/amq-broker:7.7
     requireLogin: false
     persistenceEnabled: false

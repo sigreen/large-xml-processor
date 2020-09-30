@@ -15,8 +15,8 @@ amqphub:
     pool:
       enabled: true
     remote-url: amqp://localhost:61616
-    username: admin
-    password: admin
+    #username: admin
+    #password: admin
 
 # Camel Spring Boot
 camel:
