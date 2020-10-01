@@ -145,3 +145,6 @@ oc rsync ./src/data <insert-pod-name>:/deployments/src
 13:50:06.116 [Camel (large-xml-processor) thread #1 - file://src/data] INFO  route1 - Transforming input file asian-20181028.xml
 13:50:29.982 [Camel (large-xml-processor) thread #2 - seda://logBatchCompleted] INFO  route2 - Processing of asian-20181028.xml was successfully completed. Total # of records: [22435]
 ```
+## Fuse Management Console
+
+1. To enable the Fuse Management Console, follow the procedure [here](https://access.redhat.com/documentation/en-us/red_hat_fuse/7.7/html-single/managing_fuse/index#fuse-console-setup-openshift4).  Make sure you apply the memory patch that increases limits from 30 to 100MB, otherwise the console will not start correctly.
