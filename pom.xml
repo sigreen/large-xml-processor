@@ -169,28 +169,6 @@
                 </goals>
               </execution>
             </executions>
-            <configuration>
-              <build>
-                <images>
-                  <image>
-                    <assembly>
-                      <inline>
-                        <fileSets>
-                          <fileSet>
-                            <directory>src/data</directory>
-                            <includes>
-                              <include>asian-20181028.xml</include>
-                            </includes>
-                            <outputDirectory>src/data</outputDirectory>
-                          </fileSet>
-                        </fileSets>
-                      </inline>
-                    </assembly>
-                  </image>
-                </images>
-              </build>
-            </configuration>
-
           </plugin>
         </plugins>
       </build>

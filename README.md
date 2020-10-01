@@ -1,7 +1,7 @@
 Large XML Processor in Fuse 7.7
 ====================================
 
-This project demonstrates how to process a large (20MB+) XML file using Red Hat Fuse 7.7.  The Camel Route makes use of streaming, paralell processing and JMS connection pooling.
+This project demonstrates how to process a large (20MB+) XML file using Red Hat Fuse 7.7.  The Camel Route makes use of streaming, parallel processing and JMS connection pooling.
 
 ![](images/diagram.png "Large XML Processor Flow")
 
@@ -32,7 +32,7 @@ The standalone method takes advantage of the [Camel Spring Boot Plugin](http://c
 mvn clean spring-boot:run
 ```
 
-The SpringBoot appliation should run and consume the `data/asian-20181028.xml` file.  If successful, there should be 22000+ messages in the message-items queue.  You can verify this by browsing the queue via the AMQ Console.
+The SpringBoot appliation should run and consume the `data/asian-20181028.xml` file.  If successful, there should be 22,435 messages in the `museum-items` Anycast queue.  You can verify this by browsing the queue via the AMQ Console [here](http://localhost:8161/console/login).
 
 ## Openshift Deployment
 
@@ -100,7 +100,21 @@ spec:
       minor: false
 ```
 
-5. Via the CLI, execute the following command which will execute the *openshift* profile that executes the `clean fabric8:deploy` maven goal:
+5. Via the AMQ Operator console, create an **ActiveMQArtemisAddress** using the following CRD:
+
+```
+apiVersion: broker.amq.io/v2alpha2
+kind: ActiveMQArtemisAddress
+metadata:
+  name: ex-aaoaddress
+  namespace: large-xml-processor
+spec:
+  addressName: museum-items
+  queueName: museum-items
+  routingType: anycast
+  ```
+
+6. Via the CLI, execute the following command which will execute the *openshift* profile that executes the `clean fabric8:deploy` maven goal:
 
 ```
 mvn -P openshift clean install fabric8:deploy
@@ -112,3 +126,22 @@ The fabric8 maven plugin will perform the following actions:
 * Creates the OpenShift API objects
 * Starts a Source to Image (S2I) binary build using the previously packaged artifact
 * Deploys the application using binary streams
+
+7. To test the route, upload `src/data/asian-20181028.xml` to the running pod.  You can find the pod name by running the following command:
+
+```
+oc get pods |grep Running |grep large-xml-processor
+```
+
+8. Using the pod name from the previous command, run the following command to upload the file:
+
+```
+oc rsync ./src/data <insert-pod-name>:/deployments/src
+```
+
+9. Monitor the pod log.  You should see the following output:
+
+```
+13:50:06.116 [Camel (large-xml-processor) thread #1 - file://src/data] INFO  route1 - Transforming input file asian-20181028.xml
+13:50:29.982 [Camel (large-xml-processor) thread #2 - seda://logBatchCompleted] INFO  route2 - Processing of asian-20181028.xml was successfully completed. Total # of records: [22435]
+```
