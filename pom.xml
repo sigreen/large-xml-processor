@@ -8,7 +8,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <fuse.bom.version>7.7.0.fuse-770012-redhat-00003</fuse.bom.version>
+    <fuse.bom.version>7.7.0.fuse-sb2-770010-redhat-00001</fuse.bom.version>
     <amqphub.version>2.2.7.redhat-00002</amqphub.version>
     <messaginghub.version>1.1.0.redhat-00002</messaginghub.version>
   </properties>
@@ -53,7 +53,6 @@
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-saxon-starter</artifactId>
     </dependency>
-
     <!-- activemq artemis -->
     <dependency>
       <groupId>org.apache.camel</groupId>
@@ -170,6 +169,28 @@
                 </goals>
               </execution>
             </executions>
+            <configuration>
+              <build>
+                <images>
+                  <image>
+                    <assembly>
+                      <inline>
+                        <fileSets>
+                          <fileSet>
+                            <directory>src/data</directory>
+                            <includes>
+                              <include>asian-20181028.xml</include>
+                            </includes>
+                            <outputDirectory>src/data</outputDirectory>
+                          </fileSet>
+                        </fileSets>
+                      </inline>
+                    </assembly>
+                  </image>
+                </images>
+              </build>
+            </configuration>
+
           </plugin>
         </plugins>
       </build>
