@@ -29,7 +29,7 @@ The standalone method takes advantage of the [Camel Spring Boot Plugin](http://c
 4. Via the CLI, execute the following command from the root project directory:
 
 ```
-mvn clean spring-boot:run
+mvn clean spring-boot:run -Dspring.profiles.active=dev
 ```
 
 The SpringBoot appliation should run and consume the `data/asian-20181028.xml` file.  If successful, there should be 22,435 messages in the `museum-items` Anycast queue.  You can verify this by browsing the queue via the AMQ Console [here](http://localhost:8161/console/login).
