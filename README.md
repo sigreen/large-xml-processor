@@ -149,3 +149,7 @@ oc rsync ./src/data <insert-pod-name>:/deployments/src
 ## Fuse Management Console
 
 1. To enable the Fuse Management Console, follow the procedure [here](https://access.redhat.com/documentation/en-us/red_hat_fuse/7.7/html-single/managing_fuse/index#fuse-console-setup-openshift4).  Make sure you apply the memory patch that increases limits from 30 to 100MB, otherwise the console will not start correctly.
+
+## Fuse Adapters
+
+A list of supported Fuse 7.7 connectors / adapters can be found [here](https://camel.apache.org/components/latest/).  And example of how to use the spring-jms component to connect to WMQ can be found [here](https://github.com/sigreen/wmq-amq-bridge).

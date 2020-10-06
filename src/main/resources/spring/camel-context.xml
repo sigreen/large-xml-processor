@@ -2,10 +2,26 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd          http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
     <camelContext id="camelContext-68750da5-b95d-4282-80bd-3488dc2db6d1" xmlns="http://camel.apache.org/schema/spring">
+        <onException useOriginalMessage="true">
+            <!-- Catch all errors -->
+            <exception>java.lang.Exception</exception>
+            <handled>
+                <constant>true</constant>
+            </handled>
+            <log message="Error processing XML.  Error is ${exception.message}."/>
+        </onException>
         <!-- lets parse files, transform them with XQuery and send them to JMS -->
         <route id="process-batch-file">
             <from id="_from1" uri="file:src/data?noop=true"/>
-            <log id="_log1" message="Transforming input file ${header.CamelFileName}"/>
+            <choice>
+                <when>
+                    <simple>${file:ext} == 'xml'</simple>
+                    <log id="_log1" message="Transforming input file ${header.CamelFileName}"/>
+                </when>
+                <otherwise>
+                     <throwException exceptionType="java.lang.IllegalArgumentException" message="Illegal file type [${file:ext}]. Only XML files are supported"/>
+                </otherwise>
+            </choice>
             <split id="_split1" parallelProcessing="true" streaming="true">
                 <tokenize token="object" xml="true"/>
                 <to id="_to1" uri="xquery:myTransform.xquery"/>
