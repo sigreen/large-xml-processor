@@ -9,7 +9,7 @@ This project demonstrates how to process a large (20MB+) XML file using Red Hat 
 
 - VSCode 1.4+
 - OpenShift 4.x+
-- Fuse 7.7 Image Streams (template found [here](https://raw.githubusercontent.com/jboss-fuse/application-templates/master/fis-image-streams.json))
+- Fuse 7.7 Image Streams (template found [here](https://raw.githubusercontent.com/jboss-fuse/application-templates/application-templates-2.1.0.fuse-770012-redhat-00004/fis-image-streams.json))
 - AMQ 7.7 Broker standalone (download [here](https://access.redhat.com/jbossnetwork/restricted/softwareDownload.html?softwareId=84211)) or AMQ 7.7/0.15.0 Operator (download [here](https://access.redhat.com/jbossnetwork/restricted/softwareDownload.html?softwareId=84161))
 
 ## Deployment
